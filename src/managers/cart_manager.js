@@ -17,11 +17,12 @@ export default class CartManager{
         }
     }
 
-    async create(obj){
+    async create(){
         try{
+            let products = []
             const cart = {
                 id: uuidv4(),
-                ...obj
+                products
             };
             const carts = await this.getAll();
             const cartExists = products.find((c) => c.id === cart.id);
@@ -40,21 +41,21 @@ export default class CartManager{
             if (!carts.length > 0) throw new Error("Lista de carritos vacía");
             const cart = carts.find((cart) => cart.id === id);
             if (!cart) throw new Error("Carrito no encontrado");
-            return carrito;
+            return cart;
         } catch (error){
             throw new Error(error.message);
         }
     }
 
-    async update(product, cid){
+    async update(product, cid, obj){
         try{
             const carts = await this.getAll();
             let cart = await this.getById(cid);
-
+            
             const existingProduct = cart.products.findIndex(p => p.id === product.id);
 
-            if (existingProduct !== -1) cart.products[existingProduct].quantity += product.quantity; 
-            else cart.products.push({ id: product.id, quantity: product.quantity });
+            if (existingProduct !== -1) cart.products[existingProduct].quantity += obj.quantity; 
+            else cart.products.push({ id: product.id, quantity: obj.quantity });
 
             const newArray = carts.filter((cart) => cart.id !== cid);   
             newArray.push(cart);
