@@ -2,8 +2,8 @@ import { Router } from "express";
 import CartManager from "../managers/cart_manager.js";
 import ProductManager from "../managers/product_manager.js";
 
-const cartManager = new CartManager(`${process.cwd()}/src/carritos.json`);
-const productManager = new ProductManager(`${process.cwd()}/src/productos.json`);
+const cartManager = new CartManager(`${process.cwd()}/src/data/carritos.json`);
+const productManager = new ProductManager(`${process.cwd()}/src/data/productos.json`);
 const router = Router();
 
 router.get('/', async (req, res) =>{
