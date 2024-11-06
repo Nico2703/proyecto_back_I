@@ -1,0 +1,16 @@
+<h3> Detalle de productos </h3>
+
+<ul>
+        {{#each products}}
+            <li>
+                <strong>{{title}}</strong><br>
+                Description: {{description}}<br>
+                Code: {{code}}<br>
+                Price: ${{price}}<br>
+                Status: {{status}}<br>
+                Stock: {{stock}}<br>
+                Category: {{category}}<br>
+                Thumbnails: {{thumbnails}}<br>
+            </li>
+        {{/each}}
+</ul>

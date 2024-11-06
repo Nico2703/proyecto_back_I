@@ -1,6 +1,27 @@
-<h1> Detalle de productos </h1>
+<h3> Detalle de productos </h3>
 
-<p id="products"></p>
+<ul id="products"></ul>
+
+<form id="form">
+    <legend class="legend"> Agregar producto </legend>
+    <label>Título: </label> 
+    <input type="text" name="title" id="title">
+    <label>Descripción: </label> 
+    <input type="text" name="description" id="description">
+    <label>Código: </label> 
+    <input type="text" name="code" id="code">
+    <label>Precio: </label> 
+    <input type="number" name="price" id="price">
+    <label>Estado: (check/disponible - uncheck/sin stock)</label> 
+    <input type="checkbox" name="status" id="status">
+    <label>Stock: </label> 
+    <input type="number" name="stock" id="stock">
+    <label>Categoría: </label> 
+    <input type="text" name="category" id="category">
+    <label>Thumbnails: (null/sin imagen)</label> 
+    <input type="text" name="thumbnails" id="thumbnails">
+    <input type="submit" value="Enviar" id="boton">
+</form>
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="index.js"></script>
+<script type="module" src="index.js"></script>
