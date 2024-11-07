@@ -2,26 +2,36 @@
 
 <ul id="products"></ul>
 
-<form id="form">
-    <legend class="legend"> Agregar producto </legend>
-    <label>Título: </label> 
-    <input type="text" name="title" id="title">
-    <label>Descripción: </label> 
-    <input type="text" name="description" id="description">
-    <label>Código: </label> 
-    <input type="text" name="code" id="code">
-    <label>Precio: </label> 
-    <input type="number" name="price" id="price">
-    <label>Estado: (check/disponible - uncheck/sin stock)</label> 
-    <input type="checkbox" name="status" id="status">
-    <label>Stock: </label> 
-    <input type="number" name="stock" id="stock">
-    <label>Categoría: </label> 
-    <input type="text" name="category" id="category">
-    <label>Thumbnails: (null/sin imagen)</label> 
-    <input type="text" name="thumbnails" id="thumbnails">
-    <input type="submit" value="Enviar" id="boton">
-</form>
+<div class="formus">
+    <form id="form">
+        <legend class="legend"> Agregar producto </legend>
+        <label>Título: </label> 
+        <input type="text" name="title" id="title">
+        <label>Descripción: </label> 
+        <input type="text" name="description" id="description">
+        <label>Código: </label> 
+        <input type="text" name="code" id="code">
+        <label>Precio: </label> 
+        <input type="number" name="price" id="price">
+        <label>Estado: ('1'/disponible - '0'/sin stock)</label> 
+        <input type="number" name="status" id="status">
+        <label>Stock: </label> 
+        <input type="number" name="stock" id="stock">
+        <label>Categoría: </label> 
+        <input type="text" name="category" id="category">
+        <label>Thumbnails: (null/sin imagen)</label> 
+        <input type="text" name="thumbnails" id="thumbnails">
+        <input type="submit" value="Enviar" id="boton">
+    </form>
+
+    <form id="formD">
+        <legend class="legend"> Eliminar producto </legend>
+        <label>Id: </label> 
+        <input type="text" name="pid" id="pid">
+        <input type="submit" value="Enviar" id="boton">
+    </form>
+</div>
 
 <script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script type="module" src="index.js"></script>

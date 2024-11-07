@@ -9,6 +9,10 @@ const statusIn = document.getElementById('status');
 const stockIn = document.getElementById('stock');
 const categoryIn = document.getElementById('category');
 const thumbnailsIn = document.getElementById('thumbnails');
+
+const formD = document.getElementById('formD');
+const pidIn = document.getElementById('pid');
+
 const productsContainer = document.getElementById('products');
 
 socketClient.on("productos", (data) => {
@@ -20,17 +24,17 @@ socketClient.on("productos", (data) => {
         infoProducts += `
         <li>
             <strong>${product.title}</strong><br>
+            ID: ${product.id}<br>
             Description: ${product.description}<br>
             Code: ${product.code}<br>
             Price: $${product.price}<br>
-            Status: ${product.status === 1 ? 'Disponible' : 'Sin stock'}<br>
+            Status: ${parseInt(product.status) === 1 ? 'Disponible' : 'Sin stock'}<br>
             Stock: ${product.stock}<br>
             Category: ${product.category}<br>
             Thumbnails: ${product.thumbnails.length > 0 ? product.thumbnails.join(', ') : 'Sin imagen'}<br>
             <hr>
         </li>`;
     });
-    console.log(infoProducts)
     
     productsContainer.innerHTML = infoProducts;
 });
@@ -51,4 +55,32 @@ form.onsubmit = (e) => {
         thumbnails: thumbnails 
     };
     socketClient.emit('agregarProducto', nuevoProducto);
+    Toastify({
+        text: `${nuevoProducto.title} creado`,
+        duration: 2000,
+        close: true,
+        gravity: "top", 
+        position: "right", 
+        stopOnFocus: true, 
+        style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+        },
+    }).showToast();
+}
+
+formD.onsubmit = (e) => {
+    e.preventDefault();
+    const pid = pidIn.value;
+    socketClient.emit('eliminarProducto', pid);
+    Toastify({
+        text: `Producto #${pid} eliminado`,
+        duration: 2000,
+        close: true,
+        gravity: "top", 
+        position: "right", 
+        stopOnFocus: true, 
+        style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+        },
+    }).showToast();
 }

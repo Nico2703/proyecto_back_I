@@ -61,12 +61,11 @@ form{
     border-radius: 3%;
     color:grey;
     padding: 20px;
+    background-color: white;
 }
 input{
     margin-bottom: 10px;
-}
-#status{
-    align-self:flex-start;
+    background-color: #C5D3E8;
 }
 #boton{
     width: 30%;
@@ -80,6 +79,10 @@ input{
     font-size: large;
     margin-bottom: 20px;
     text-align: center;
+}
+.formus{
+    display: flex;
+    flex-direction: row;
 }
 
 .footer{

@@ -44,6 +44,11 @@ socketServer.on('connection', (socket)=>{
 
     socket.on("agregarProducto", (prod) =>{      
         productManager.create(prod);
-        socket.emit("productos", products)
+        socket.emit("productos", products);
+    })
+
+    socket.on("eliminarProducto", (id) =>{      
+        productManager.delete(id);
+        socket.emit("productos", products);
     })
 });
