@@ -11,9 +11,9 @@ export const getAll = async (req, res, next) => {
 
 export const getById = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const product = await services.getById(id);
-        res.json(product);
+        const { cid } = req.params;
+        const cart = await services.getById(cid);
+        res.json(cart);
     } catch (error) {
         next(error);
     }
@@ -21,8 +21,8 @@ export const getById = async (req, res, next) => {
 
 export const create = async (req, res, next) => {
     try {
-        const newProduct = await services.create(req.body);
-        res.json(newProduct);
+        const newCart = await services.create(req.body);
+        res.json(newCart);
     } catch (error) {
         next(error);
     }
@@ -30,9 +30,10 @@ export const create = async (req, res, next) => {
 
 export const update = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const productUpdated = await services.update(id, req.body);
-        res.json(productUpdated);
+        const { cid } = req.params;
+        const { pid } = req.params;
+        const cartUpdated = await services.update(cid, pid, req.body);
+        res.json(cartUpdated);
     } catch (error) {
         next(error);
     }
@@ -40,9 +41,9 @@ export const update = async (req, res, next) => {
 
 export const remove = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const prodDel = await services.remove(id);
-        res.json(prodDel);
+        const { cid } = req.params;
+        const cartDel = await services.remove(cid);
+        res.json(cartDel);
     } catch (error) {
         next(error);
     }
@@ -50,8 +51,8 @@ export const remove = async (req, res, next) => {
 
 export const removeAll = async (req, res, next) => {
     try {
-        const prodDel = await services.removeAll();
-        res.json(prodDel);
+        const cartDel = await services.removeAll();
+        res.json(cartDel);
     } catch (error) {
         next(error);
     }

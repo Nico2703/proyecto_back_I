@@ -30,20 +30,18 @@ class CartDaoMongo{
         }
     }
 
-    async update(product, cid, obj){
+    async update(cid, pid, obj){
         try{    
-            const carts = await this.getAll();
             let cart = await this.getById(cid);
-            
-            const existingProduct = cart.products.findIndex(p => p.id === product.id);
 
-            if (existingProduct !== -1) cart.products[existingProduct].quantity += obj.quantity; 
-            else cart.products.push({ id: product.id, quantity: obj.quantity });
-
-            const newArray = carts.filter((cart) => cart.id !== cid);   
-            newArray.push(cart);
+            const quantityToAdd = obj.quantity ? Number(obj.quantity) : 1;
             
-            return await this.model.findByIdAndUpdate(cid, obj, { new: true });
+            const existingProduct = cart.products.findIndex(p => p._id.toString() === pid.toString());
+
+            if (existingProduct !== -1) cart.products[existingProduct].quantity += quantityToAdd; 
+            else cart.products.push({ _id: pid, quantity: quantityToAdd });
+
+            return await this.model.findByIdAndUpdate(cid, { products: cart.products });
         } catch (error){
             throw new Error(error);
         }

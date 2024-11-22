@@ -1,9 +1,14 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, mongoose } from "mongoose";
 
-export const cartsCollectionName = "carrito";
+export const cartsCollectionName = "carritos";
 
 const CartSchema = new Schema({
-    products: { type: [String], required: true },
+    products: [
+        { 
+        _id: { type: mongoose.Schema.Types.ObjectId, ref: 'ProductModel' }, 
+        quantity: { type: Number, required: true, default: 1 } 
+        },
+    ]
 });
 
 export const CartModel = model(cartsCollectionName, CartSchema);

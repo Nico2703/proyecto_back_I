@@ -11,8 +11,8 @@ export const getAll = async (req, res, next) => {
 
 export const getById = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const product = await services.getById(id);
+        const { pid } = req.params;
+        const product = await services.getById(pid);
         res.json(product);
     } catch (error) {
         next(error);
@@ -30,8 +30,8 @@ export const create = async (req, res, next) => {
 
 export const update = async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const productUpdated = await services.update(id, req.body);
+        const { pid } = req.params;
+        const productUpdated = await services.update(pid, req.body);
         res.json(productUpdated);
     } catch (error) {
         next(error);

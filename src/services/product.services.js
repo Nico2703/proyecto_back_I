@@ -1,4 +1,5 @@
 import { prodDao } from "../daos/mongodb/product.dao.js";
+import { CustomError } from "../middlewares/errorHandler.js";
 
 export const getAll = async () => {
     try {
@@ -8,9 +9,10 @@ export const getAll = async () => {
     }
 };
 
-export const getById = async (id) => {
+export const getById = async (pid) => {
     try {
-        const prod = await prodDao.getById(id);
+        console.log(pid);
+        const prod = await prodDao.getById(pid);
         if (!prod) throw new CustomError("Producto no encontrado", 404);
         return prod;
     } catch (error) {
@@ -28,9 +30,9 @@ export const create = async (obj) => {
     }
 };
 
-export const update = async (id, obj) => {
+export const update = async (pid, obj) => {
     try {
-        const prodUpd = await prodDao.update(id, obj);
+        const prodUpd = await prodDao.update(pid, obj);
         if (!prodUpd) throw new CustomError("Error al actualizar el producto", 400);
         return prodUpd;
     } catch (error) {
@@ -38,9 +40,9 @@ export const update = async (id, obj) => {
     }
 };
 
-export const remove = async (id) => {
+export const remove = async (pid) => {
     try {
-        const prodDel = await prodDao.delete(id);
+        const prodDel = await prodDao.delete(pid);
         if (!prodDel) throw new CustomError("Error al eliminar el producto", 400);
         return prodDel;
     } catch (error) {
@@ -48,7 +50,7 @@ export const remove = async (id) => {
     }
 };
 
-export const removeAll = async (id) => {
+export const removeAll = async () => {
     try {
         const prodDel = await prodDao.deleteAll();
         if (!prodDel) throw new CustomError("Error al eliminar los productos", 400);

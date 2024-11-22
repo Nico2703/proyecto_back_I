@@ -1,4 +1,5 @@
 import { cartDao } from "../daos/mongodb/cart.dao.js";
+import { CustomError } from "../middlewares/errorHandler.js";
 
 export const getAll = async () => {
     try {
@@ -8,9 +9,9 @@ export const getAll = async () => {
     }
 };
 
-export const getById = async (id) => {
+export const getById = async (cid) => {
     try {
-        const cart = await cartDao.getById(id);
+        const cart = await cartDao.getById(cid);
         if (!cart) throw new CustomError("Carrito no encontrado", 404);
         return cart;
     } catch (error) {
@@ -28,9 +29,9 @@ export const create = async (obj) => {
     }
 };
 
-export const update = async (id, obj) => {
+export const update = async (cid, pid, obj) => {
     try {
-        const cartUpd = await cartDao.update(id, obj);
+        const cartUpd = await cartDao.update(cid, pid, obj);
         if (!cartUpd) throw new CustomError("Error al actualizar el carrito", 400);
         return cartUpd;
     } catch (error) {
@@ -38,9 +39,9 @@ export const update = async (id, obj) => {
     }
 };
 
-export const remove = async (id) => {
+export const remove = async (cid) => {
     try {
-        const cartDel = await cartDao.delete(id);
+        const cartDel = await cartDao.delete(cid);
         if (!cartDel) throw new CustomError("Error al eliminar el carrito", 400);
         return cartDel;
     } catch (error) {

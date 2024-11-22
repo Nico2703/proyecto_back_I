@@ -17,6 +17,6 @@ router.post('/:cid/product/:pid', controllers.update);
 
 router.delete('/:cid', controllers.remove);
 
-router.delete('/',controllers. removeAll);
+router.delete('/', controllers. removeAll);
 
 export default router;

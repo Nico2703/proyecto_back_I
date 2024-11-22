@@ -21,9 +21,9 @@ class ProductDaoMongo{
         }
     }
 
-    async getById(id){
+    async getById(pid){
         try{
-            return await this.model.findById(id);
+            return await this.model.findById(pid);
         } catch (error){
             throw new Error(error);
         }
@@ -37,9 +37,9 @@ class ProductDaoMongo{
         }
     }
 
-    async delete(id){
+    async delete(pid){
         try{
-            return await this.model.findByIdAndDelete(id);
+            return await this.model.findByIdAndDelete(pid);
         } catch (error){
             throw new Error(error);
         }
