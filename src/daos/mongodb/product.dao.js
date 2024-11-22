@@ -5,9 +5,20 @@ class ProductDaoMongo{
         this.model = model;
     }
 
-    async getAll(){
+    async getRender(){
         try{
             return await this.model.find({}).lean();
+        } catch (error){
+            throw new Error (error);
+        }
+    }
+
+    async getAll(limit = 2, page = 1, category, sort){
+        try{
+            const filter = category ? { 'category': category } : {};
+            let sortOrder = {};
+            if(sort) sortOrder.price = sort === 'asc' ? 1 : sort === 'desc' ? -1 : null;
+            return await this.model.paginate(filter, { page, limit, sort: sortOrder });
         } catch (error){
             throw new Error (error);
         }

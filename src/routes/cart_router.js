@@ -13,10 +13,14 @@ router.get('/:cid', controllers.getById);
 
 router.post('/', controllers.create);
 
-router.post('/:cid/product/:pid', controllers.update);
+router.put('/:cid/products/:pid', controllers.updateCartProduct);
 
-router.delete('/:cid', controllers.remove);
+router.put('/:cid', controllers.updateCart);
 
-router.delete('/', controllers. removeAll);
+router.delete('/', controllers.removeAllCarts);
+
+router.delete('/:cid', controllers.removeAllProductsFromCart);
+
+router.delete('/:cid/products/:pid', controllers.removeProductFromCart);
 
 export default router;

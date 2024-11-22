@@ -1,9 +1,17 @@
 import { prodDao } from "../daos/mongodb/product.dao.js";
 import { CustomError } from "../middlewares/errorHandler.js";
 
-export const getAll = async () => {
+export const getRender = async () => {
     try {
-        return await prodDao.getAll();
+        return await prodDao.getRender();
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+export const getAll = async (limit, page, category, sort) => {
+    try {
+        return await prodDao.getAll(limit, page, category, sort);
     } catch (error) {
         throw new Error(error);
     }

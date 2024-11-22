@@ -29,9 +29,9 @@ export const create = async (obj) => {
     }
 };
 
-export const update = async (cid, pid, obj) => {
+export const updateCart = async (cid, limit) => {
     try {
-        const cartUpd = await cartDao.update(cid, pid, obj);
+        const cartUpd = await cartDao.updateCart(cid, limit);
         if (!cartUpd) throw new CustomError("Error al actualizar el carrito", 400);
         return cartUpd;
     } catch (error) {
@@ -39,9 +39,19 @@ export const update = async (cid, pid, obj) => {
     }
 };
 
-export const remove = async (cid) => {
+export const updateCartProduct = async (cid, pid, obj) => {
     try {
-        const cartDel = await cartDao.delete(cid);
+        const cartUpd = await cartDao.updateCartProduct(cid, pid, obj);
+        if (!cartUpd) throw new CustomError("Error al actualizar el carrito", 400);
+        return cartUpd;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const removeProductFromCart = async (cid, pid) => {
+    try {
+        const cartDel = await cartDao.deleteProductFromCart(cid, pid);
         if (!cartDel) throw new CustomError("Error al eliminar el carrito", 400);
         return cartDel;
     } catch (error) {
@@ -49,9 +59,19 @@ export const remove = async (cid) => {
     }
 };
 
-export const removeAll = async () => {
+export const removeAllProductsFromCart = async (cid) => {
     try {
-        const cartDel = await cartDao.deleteAll();
+        const cartDel = await cartDao.deleteAllProductsFromCart(cid);
+        if (!cartDel) throw new CustomError("Error al eliminar el carrito", 400);
+        return cartDel;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const removeAllCarts = async () => {
+    try {
+        const cartDel = await cartDao.deleteAllCarts();
         if (!cartDel) throw new CustomError("Error al eliminar los carritos", 400);
         return cartDel;
     } catch (error) {

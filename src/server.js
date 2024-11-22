@@ -26,7 +26,7 @@ app.set('views', path.join(process.cwd(), 'src', 'views'));
 app.set('view engine', 'handlebars');
 
 app.get('/', async (req, res) =>{
-    const products = await prodDao.getAll();
+    const products = await prodDao.getRender();
     res.render('home', { products });
 });
 
@@ -45,7 +45,7 @@ if (PERSISTENCE === "MONGO")
 const socketServer = new Server(httpServer);
 
 socketServer.on('connection', async (socket)=>{
-    const products = await prodDao.getAll();
+    const products = await prodDao.getRender();
     console.log(`Usuario conectado: ${socket.id}`);
     socket.on('disconnect', ()=>{
         console.log("Usuario desconectado")

@@ -1,9 +1,30 @@
 import * as services from "../services/product.services.js";
 
+export const getRender = async (req, res, next) => {
+    try {
+        const response = await services.getRender();
+        res.json(response);
+    } catch (error) {
+        next(error);  
+    }
+};
+
 export const getAll = async (req, res, next) => {
     try {
-        const response = await services.getAll();
-        res.json(response);
+        const { limit, page, category, sort } = req.query;
+        const response = await services.getAll(limit, page, category, sort);
+        res.json({
+            status: response.status,
+            payload: response.docs,
+            totalPages: response.totalPages,
+            prevPage: response.prevPage,
+            nextPage: response.nextPage,
+            page: response.page,
+            hasPrevPage: response.hasPrevPage,
+            hasNextPage: response.hasNextPage,
+            prevLink: response.hasPrevPage ? `http://localhost:8080/api/products?limit=${response.limit}&page=${response.prevPage}` : null,
+            nextLink: response.hasNextPage ? `http://localhost:8080/api/products?limit=${response.limit}&page=${response.nextPage}` : null,
+        });
     } catch (error) {
         next(error);  
     }

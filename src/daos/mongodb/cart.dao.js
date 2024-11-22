@@ -30,7 +30,21 @@ class CartDaoMongo{
         }
     }
 
-    async update(cid, pid, obj){
+    async updateCart(cid, limit){
+        try{    
+            const products = await prodDao.getAll(limit);
+
+            return await this.model.findByIdAndUpdate(
+                cid, 
+                { $addToSet: { products: { $each: products.docs } } },
+                { new : true }
+            );
+        } catch (error){
+            throw new Error(error);
+        }
+    }
+
+    async updateCartProduct(cid, pid, obj){
         try{    
             let cart = await this.getById(cid);
 
@@ -47,15 +61,27 @@ class CartDaoMongo{
         }
     }
 
-    async delete(id){
+    async deleteProductFromCart(cid, pid){
         try{
-            return await this.model.findByIdAndDelete(id);
+            return await this.model.findByIdAndUpdate(
+                cid, 
+                { $pull: { products: {_id: pid } } }, 
+                { new: true }
+            );
         } catch (error){
             throw new Error(error);
         }
     }
 
-    async deleteAll(){
+    async deleteAllProductsFromCart(cid){
+        try{
+            return await this.model.findByIdAndUpdate(cid, { products: [] }, { new: true });
+        } catch (error){
+            throw new Error(error);
+        }
+    }
+
+    async deleteAllCarts(){
         try{
             return await this.model.deleteMany({});
         } catch(error){
