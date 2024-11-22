@@ -24,7 +24,7 @@ socketClient.on("productos", (data) => {
         infoProducts += `
         <li>
             <strong>${product.title}</strong><br>
-            ID: ${product.id}<br>
+            ID: ${product._id}<br>
             Description: ${product.description}<br>
             Code: ${product.code}<br>
             Price: $${product.price}<br>
