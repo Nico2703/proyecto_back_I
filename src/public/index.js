@@ -72,15 +72,23 @@ formD.onsubmit = (e) => {
     e.preventDefault();
     const pid = pidIn.value;
     socketClient.emit('eliminarProducto', pid);
-    Toastify({
-        text: `Producto #${pid} eliminado`,
-        duration: 2000,
-        close: true,
-        gravity: "top", 
-        position: "right", 
-        stopOnFocus: true, 
-        style: {
-            background: "linear-gradient(to right, #00b09b, #96c93d)",
-        },
-    }).showToast();
+}
+
+if (!window.hasListener) {
+    socketClient.on('productoEliminado', (response) =>{
+        const { success, message } = response;
+        
+        Toastify({
+            text: message,
+            duration: 2000,
+            close: true,
+            gravity: "top", 
+            position: "right", 
+            stopOnFocus: true, 
+            style: {
+                background: success ? "linear-gradient(to right, #00b09b, #96c93d)" : "linear-gradient(to right, #ff5f6d, #ffc3a0)",
+            },
+        }).showToast();
+    });
+    window.hasListener = true;
 }

@@ -1,14 +1,31 @@
 <h3> Detalle de productos </h3>
 
-<ul id="products">
+<ul class="products">
     {{#each products}}
         <li>
-            <strong>{{title}}</strong><br>
-            Description: {{description}}<br>
-            Code: {{code}}<br>
-            Price: ${{price}}<br>
-            Category: {{category}}<br>
+            <h4><strong>{{this.title}}</strong></h4>
+            <p>{{this.description}}</p>
+            <p><strong>Código:</strong> {{this.code}}</p>
+            <p><strong>Precio:</strong> ${{this.price}}</p>
+            <p><strong>Categoría:</strong> {{this.category}}</p>
             <button id="botonAdd"> Agregar a carrito </button>
         </li>
     {{/each}}
 </ul>
+
+<div class="paginacion">
+    {{#if prodPag.hasPrevPage}}
+        <a class="botonPag" href="?limit={{prodPag.limit}}&page={{prodPag.prevPage}}">Anterior</a>
+    {{else}}
+        <span class="botonPag">Anterior</span>
+    {{/if}}
+
+    <span>Página {{prodPag.page}} de {{prodPag.totalPages}}</span>
+
+    {{#if prodPag.hasNextPage}}
+        <a class="botonPag" href="?limit={{prodPag.limit}}&page={{prodPag.nextPage}}">Siguiente</a>
+    {{else}}
+        <span class="botonPag">Siguiente</span>
+    {{/if}}
+</div>
+

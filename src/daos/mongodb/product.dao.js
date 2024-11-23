@@ -13,7 +13,7 @@ class ProductDaoMongo{
         }
     }
 
-    async getAll(limit = 2, page = 1, category, sort){
+    async getAll(limit = 3, page = 1, category, sort){
         try{
             const filter = category ? { 'category': category } : {};
             let sortOrder = {};
@@ -50,7 +50,9 @@ class ProductDaoMongo{
 
     async delete(pid){
         try{
-            return await this.model.findByIdAndDelete(pid);
+            const product = await this.model.findByIdAndDelete(pid);
+            if (!product) return null;
+            return product;
         } catch (error){
             throw new Error(error);
         }

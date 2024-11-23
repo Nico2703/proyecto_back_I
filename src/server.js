@@ -27,8 +27,22 @@ app.set('views', path.join(process.cwd(), 'src', 'views'));
 app.set('view engine', 'handlebars');
 
 app.get('/', async (req, res) =>{
-    const products = await prodDao.getRender();
-    res.render('home', { products });
+    const limit = parseInt(req.query.limit) || 3;
+    const page = parseInt(req.query.page) || 1;
+
+    const prodPag = await prodDao.getAll(limit, page);
+    const products = prodPag.docs.map(product => {
+        return {
+            id: product._id,
+            title: product.title,
+            description: product.description,
+            code: product.code,
+            price: product.price,
+            category: product.category,
+        };
+    });
+    console.log(prodPag)
+    res.render('home', { products, prodPag });
 });
 
 app.get('/realTimeProducts', (req, res)=>{
@@ -64,7 +78,7 @@ if (PERSISTENCE === "MONGO")
 const socketServer = new Server(httpServer);
 
 socketServer.on('connection', async (socket)=>{
-    const products = await prodDao.getRender();
+    let products = await prodDao.getRender();
     console.log(`Usuario conectado: ${socket.id}`);
     socket.on('disconnect', ()=>{
         console.log("Usuario desconectado")
@@ -73,12 +87,25 @@ socketServer.on('connection', async (socket)=>{
     socket.emit("productos", products);  
 
     socket.on("agregarProducto", async (prod) =>{      
-        prodDao.create(prod);
-        socket.emit("productos", products);
+        try{
+            await prodDao.create(prod);
+            products = await prodDao.getRender();
+            socket.emit("productos", products);
+        } catch(error){
+            console.error("Error al agregar el producto", error);
+        }
     })
 
-    socket.on("eliminarProducto", async (id) =>{      
-        prodDao.delete(id);
-        socket.emit("productos", products);
+    socket.on("eliminarProducto", async (pid) =>{  
+        try{
+            const result = await prodDao.delete(pid);
+            if(result) {
+                products = await prodDao.getRender();
+                socket.emit("productos", products);
+                socket.emit("productoEliminado", {success: true, message: `Producto #${pid} eliminado` })
+            }
+        }catch(error){
+            socket.emit("productoEliminado", { success: false, message: "Error al eliminar el producto" });
+        }
     })
 });
