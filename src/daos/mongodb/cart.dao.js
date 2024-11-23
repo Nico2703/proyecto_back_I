@@ -9,6 +9,7 @@ class CartDaoMongo{
     async getAll(){
         try{
             return await this.model.find({})
+            .populate('products._id', {code: 0, thumbnails: 0, stock: 0, status: 0});
         } catch (error){
             throw new Error (error);
         }
@@ -22,9 +23,10 @@ class CartDaoMongo{
         }
     }
 
-    async getById(id){
+    async getById(cid){
         try{
-            return await this.model.findById(id);
+            return await this.model.findById(cid)
+            .populate('products._id', {code: 0, thumbnails: 0, stock: 0, status: 0});
         } catch (error){
             throw new Error(error);
         }

@@ -4,14 +4,11 @@
     {{#each products}}
         <li>
             <strong>{{title}}</strong><br>
-            ID: {{_id}}<br>
             Description: {{description}}<br>
             Code: {{code}}<br>
             Price: ${{price}}<br>
-            Status: {{status}}<br>
-            Stock: {{stock}}<br>
             Category: {{category}}<br>
-            Thumbnails: {{thumbnails}}<br>
+            <button id="botonAdd"> Agregar a carrito </button>
         </li>
     {{/each}}
 </ul>

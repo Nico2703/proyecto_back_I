@@ -9,6 +9,7 @@ import 'dotenv/config';
 import { Server } from 'socket.io';
 import { initMongoDB } from "./daos/mongodb/db.connection.js";
 import { prodDao } from './daos/mongodb/product.dao.js';
+import { cartDao } from './daos/mongodb/cart.dao.js';
 
 //const productManager = new ProductManager(`${process.cwd()}/src/daos/filesystem/data/productos.json`);
 
@@ -34,6 +35,24 @@ app.get('/realTimeProducts', (req, res)=>{
     res.render('realTimeProducts')
 });
 
+app.get('/carts/:cid', async (req, res) =>{
+    const { cid } = req.params;
+    const cart = await cartDao.getById(cid);
+    
+    const cartData = {
+        _id: cart._id,
+        products: cart.products.map(product => ({
+            _id: product._id._id,
+            title: product._id.title,
+            description: product._id.description,
+            quantity: product.quantity,
+            
+        }))
+    };
+
+    res.render('cartView', { cart: cartData });
+});
+
 const PERSISTENCE = process.env.PERSISTENCE;
 
 if (PERSISTENCE === "MONGO")
@@ -50,15 +69,15 @@ socketServer.on('connection', async (socket)=>{
     socket.on('disconnect', ()=>{
         console.log("Usuario desconectado")
     })
-
+    
     socket.emit("productos", products);  
 
-    socket.on("agregarProducto", (prod) =>{      
+    socket.on("agregarProducto", async (prod) =>{      
         prodDao.create(prod);
         socket.emit("productos", products);
     })
 
-    socket.on("eliminarProducto", (id) =>{      
+    socket.on("eliminarProducto", async (id) =>{      
         prodDao.delete(id);
         socket.emit("productos", products);
     })
