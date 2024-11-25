@@ -7,7 +7,11 @@ class ProductDaoMongo{
 
     async getRender(){
         try{
-            return await this.model.find({}).lean();
+            const limit = 6
+            return await this.model.find({})
+            .sort({ _id: -1 })
+            .lean()
+            .limit(limit);
         } catch (error){
             throw new Error (error);
         }

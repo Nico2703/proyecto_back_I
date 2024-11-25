@@ -45,7 +45,7 @@ li{
     list-style-type: none;
     border: 2px solid #C5D3E8;
     border-radius: 5%;
-    width: 15%;
+    width: 16%;
     padding: 5px;
     color:grey;
     background-color: white;
@@ -103,7 +103,7 @@ input{
 .paginacion{
     background-color: white;
     text-align: center;
-    margin: 0px 530px 140px 530px;
+    margin: 0px 530px 324px 530px;
 }
 
 .botonPag{

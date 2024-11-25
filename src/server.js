@@ -29,11 +29,12 @@ app.set('view engine', 'handlebars');
 app.get('/', async (req, res) =>{
     const limit = parseInt(req.query.limit) || 3;
     const page = parseInt(req.query.page) || 1;
+    const category = req.query.category || null;
 
-    const prodPag = await prodDao.getAll(limit, page);
+    const prodPag = await prodDao.getAll(limit, page, category);
     const products = prodPag.docs.map(product => {
         return {
-            id: product._id,
+            _id: product._id,
             title: product.title,
             description: product.description,
             code: product.code,
